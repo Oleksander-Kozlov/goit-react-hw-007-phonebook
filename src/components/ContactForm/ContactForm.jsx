@@ -32,6 +32,17 @@ export const ContactForm = () => {
   const handleSabmit = e => {
     // Cкидую налаштування
     e.preventDefault();
+            const haveNameInPhonebook = JSON.parse(
+              localStorage.getItem('user-contact')
+            ).some(
+              ({ name }) =>
+                name.toLowerCase() === e.currentTarget.name.value.toLowerCase()
+            );
+            if (haveNameInPhonebook) {
+              return alert(
+                `${e.currentTarget.name.value} is already in contacts`
+              );
+            }
     // Записую значення з імпуту до об"єкту
     dispatch(addContact( name, number ));
     // Оновлюю інпут

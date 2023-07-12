@@ -22,7 +22,7 @@ export const ContactList = () => {
 
   console.log('contactss', contactss);
   const visibleFilter = contactss.filter(contact =>
-    contact.name.toLowerCase().includes(filters)
+    contact.name.toString().toLowerCase().includes(filters)
   );
   useEffect(() => {
     localStorage.setItem('user-contact', JSON.stringify(contacts));

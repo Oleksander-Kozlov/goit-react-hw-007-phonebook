@@ -1,14 +1,14 @@
+import { Field as FormikField, Form as FormikForm} from 'formik';
 import styled from 'styled-components';
-
-export const ContactFormStyle = styled.form`
-  
+ 
+export const Form = styled(FormikForm)`
   max-width: 700px;
   /* display: flex;
   flex-direction: column; */
   /* max-width: 100%; */
   margin: 0 auto;
   padding: 10px;
-  margin-bottom:50px;
+  margin-bottom: 50px;
 `;
 export const DivForInput = styled.div`
 margin-bottom: 1rem;`
@@ -21,6 +21,24 @@ export const Label = styled.label`
   font-weight: bold;
 `;
 export const Input = styled.input`
+  display: block;
+  width: 97%;
+  margin-top: 10px;
+  margin-bottom: 32px;
+  padding: 0.5rem;
+  font-size: 2rem;
+  border: 1px solid black;
+  outline: transparent;
+  border-radius: 4px;
+  /* transition: box-shadow 0.3s ease; */
+  background-color: rgb(99, 99, 255);
+  &:hover {
+    outline: 5px solid rgb(255, 255, 0);
+    border: none;
+    /* box-shadow: 0 0 5px rgba(0, 123, 255, 0.3); */
+  }
+`;
+export const Field = styled(FormikField)`
   display: block;
   width: 97%;
   margin-top: 10px;

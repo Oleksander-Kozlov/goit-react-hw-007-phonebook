@@ -9,7 +9,8 @@ export const Filter = () => {
 
   const [filterok, setFilter] = useState('');
 
-  const handleFind=(e)=> {
+  const handleFind = (e) => {
+    console.log(e);
     setFilter(e.target.value);
     
   }

@@ -17,12 +17,12 @@ const contactsSlise = createSlice({
         // const haveNameInPhonebook = state.some(
         //   ({ name }) => name.toLowerCase() === action.payload.name.toLowerCase()
             // );
-            const haveNameInPhonebook = state.find(
-              ({ name }) => name === action.payload.name
-            );
-        if (haveNameInPhonebook) {
-          return alert(`${action.payload.name} is already in contacts`);
-        }
+        //     const haveNameInPhonebook = state.find(
+        //       ({ name }) => name === action.payload.name
+        //     );
+        // if (haveNameInPhonebook) {
+        //   return alert(`${action.payload.name} is already in contacts`);
+        // }
         const updatePhonebook = [...state, action.payload];
         localStorage.setItem('user-contact', JSON.stringify(updatePhonebook));
         state.push(action.payload);

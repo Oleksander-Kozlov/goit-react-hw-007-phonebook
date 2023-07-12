@@ -94,15 +94,15 @@ export const ContactForm = () => {
   };
 
   const initialValues = { name: '', number: '' };
-  // const schema = yup.object().shape({
-  //   name: yup.string().required().min(4),
-  //   phone: yup.number().min(4).required(),
+  const schema = yup.object().shape({
+    name: yup.string().required().min(4),
+    phone: yup.number().min(4).required(),
 
-  // });
+  });
   return (
     <Formik
       initialValues={initialValues}
-      // validationSchema={schema}
+      validationSchema={schema}
       onSubmit={handleSabmit}
     >
       <Form>

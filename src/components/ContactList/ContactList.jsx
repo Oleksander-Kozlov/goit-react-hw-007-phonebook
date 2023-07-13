@@ -4,6 +4,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { ButtonDelete, CotactItem } from './Contact.styled.js';
 import { deleteContact } from 'redux/contactsSlise.js';
+import * as operation from '../../redux/operation';
+ 
 // import { deleteContact } from 'redux/actions.js';
 // import PropTypes from 'prop-types';
 // import { useSelector } from 'react-redux/es/hooks/useSelector.js';
@@ -13,22 +15,24 @@ import { deleteContact } from 'redux/contactsSlise.js';
 //     { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },]
 export const ContactList = () => {
   const filters = useSelector(state => state.filters);
-  const contacts = useSelector(state => state.contacts);
+  const contacts = useSelector(state => state.contacts.items);
+  const dispatch = useDispatch();
   localStorage.setItem('user-contact', JSON.stringify(contacts));
   console.log('contacts', contacts);
   console.log('filters', filters);
 
-  const contactss = JSON.parse(localStorage.getItem('user-contact'))
+  // const contactss = JSON.parse(localStorage.getItem('user-contact'))
 
-  console.log('contactss', contactss);
-  const visibleFilter = contactss.filter(contact =>
+  console.log('contacts', contacts);
+  const visibleFilter = contacts.filter(contact =>
     contact.name.toLowerCase().includes(filters)
   );
   useEffect(() => {
-    localStorage.setItem('user-contact', JSON.stringify(contacts));
-  }, [contacts]);
+    // localStorage.setItem('user-contact', JSON.stringify(contacts));
+    dispatch(operation.fetchContacts());
+  }, [dispatch]);
 
-  const dispatch = useDispatch();
+  
   //  const handleDelete = (id)=> {dispatch(deleteContact(id))};
     const handleDelete = id => {
       dispatch(deleteContact(id));

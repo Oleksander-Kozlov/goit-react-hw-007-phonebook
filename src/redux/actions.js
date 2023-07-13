@@ -1,3 +1,4 @@
+import { createAction } from '@reduxjs/toolkit';
 import { nanoid } from 'nanoid';
 export const addContact = ({ name, number }) => {
   return {
@@ -23,3 +24,12 @@ export const filterContact = input => {
     payload: input,
   };
 };
+// одержання масиву контактів
+export const fetchContactsRequest = createAction('contacts/fetchAllRequest');
+//fulfilled
+export const fetchContactsSuccess = createAction('contacts/fetchAllSuccess');
+//rejected
+export const fetchContactsError = createAction('contacts/fetchAllError');
+
+
+

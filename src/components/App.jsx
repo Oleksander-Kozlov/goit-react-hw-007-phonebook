@@ -6,17 +6,13 @@
 import { ContactForm } from './ContactForm/ContactForm.jsx';
 import { Filter } from './Filter/Filter.jsx';
 import { ContactList } from './ContactList/ContactList.jsx';
+import { useSelector } from 'react-redux';
 
 export const App = () => {
-  
+  const contacts = useSelector(state => state.contacts);
+  console.log('contactsAPP', contacts.length);
 
   
-  // JSON.parse(localStorage.getItem('user-contact'));
-
-
-
- 
-
 
   return (
     <div
@@ -29,20 +25,11 @@ export const App = () => {
       }}
     >
       <div>
-        <h1>Phonebook </h1>{' '}
-        <ContactForm
-        // createContacts={createContacts}
-        />
+        <h1>Phonebook</h1>
+        <ContactForm />
         <h2>Contacts</h2>
-        <Filter
-        // value={filtered} filter={handleFind}
-        />
-        <ContactList
-        //   contacts={
-        //   visibleFilter
-        // }
-        // onDeleteContact={handleDelete}
-        />
+        <Filter />
+        <ContactList />
       </div>
     </div>
   );

@@ -8,13 +8,17 @@ export const Filter = () => {
   const dispatch = useDispatch();
 
   const [filterok, setFilter] = useState('');
-
+// let filterok 
   const handleFind = (e) => {
-    console.log(e);
+ 
     setFilter(e.target.value);
-    
+    //  filterok = e.target.value;
+     dispatch(filter(e.target.value));
   }
-dispatch(filter(filterok));
+ 
+  
+
+  
   return (
     <div>
       <Label htmlFor="">

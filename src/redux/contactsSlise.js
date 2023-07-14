@@ -1,34 +1,50 @@
 import { createSlice, nanoid } from '@reduxjs/toolkit';
+import { fetchContacts } from './operation.js';
 
-const InitialState =
-  // JSON.parse(localStorage.getItem('user-contact')) ||
-{  items: [
-  { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
-  { id: 'id-2', name: 'Hermione Kline', number: '443-89-12' },
-  { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
-  { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
-], isLoading: false,
-error: null,}
-
+const InitialState = { items: [], isLoading: false, error: null };
+const handleFulfilled = (state, action) => {
+  state.items = action.payload;
+  state.isLoading = false;
+}; 
+const handleRejected = (state, action) => {
+  state.error = action.payload;
+  state.isLoading = false;
+};
+const handlePending = (state, action) => {
+  state.isLoading = true;
+  state.error = null;
+};
 const contactsSlise = createSlice({
   name: 'contacts',
   initialState: InitialState,
   reducers: {
+    // fetchContactsRequest(state) {
+    //   state.isLoading = true;
+    // },
+    // fetchContactsSuccess(state, action) {
+    //   state.isLoading = false;
+    //   state.error = null;
+    //   state.items = action.payload;
+    // },
+    // fetchContactsError(state, action) {
+    //   state.isLoading = false;
+    //   state.error = action.payload;
+    // },
     addContact: {
       reducer(state, action) {
         // state.push(action.payload);
         // const haveNameInPhonebook = state.some(
         //   ({ name }) => name.toLowerCase() === action.payload.name.toLowerCase()
-            // );
+        // );
         //     const haveNameInPhonebook = state.find(
         //       ({ name }) => name === action.payload.name
         //     );
         // if (haveNameInPhonebook) {
         //   return alert(`${action.payload.name} is already in contacts`);
         // }
-        const updatePhonebook = [...state.items, action.payload];
+        const updatePhonebook = [state.items, action.payload];
         localStorage.setItem('user-contact', JSON.stringify(updatePhonebook));
-        state.push(action.payload);
+        state.items.push(action.payload);
       },
       prepare(name, number) {
         return {
@@ -41,20 +57,34 @@ const contactsSlise = createSlice({
       },
     },
     deleteContact(state, action) {
-      //   const index = state.findIndex(task => task.id === action.payload);
-      //     state.splice(index, 1);
-
-      const withoutRemovedContact = state.filter(
-        contact => contact.id !== action.payload
+      const index = state.items.findIndex(
+        contact => contact.id === action.payload
       );
+      state.items.splice(index, 1);
 
-      localStorage.setItem(
-        'user-contact',
-        JSON.stringify(withoutRemovedContact)
-      );
-      return withoutRemovedContact;
+      // const removeContactById = (state, action) => {
+
+      // if (index !== -1) {
+      //   state.items.splice(index, 1);
+      // }
+      // };
+
+      // const withoutRemovedContact = state.items.filter(
+      //   contact => contact.id !== action.payload
+      // );
+      console.log('state.items', state.items);
+      // localStorage.setItem(
+      //   'user-contact',
+      //   JSON.stringify(index)
+      // );
+      return index;
     },
   },
+  extraReducers: builder =>
+    builder
+      .addCase(fetchContacts.fulfilled, handleFulfilled)
+      .addCase(fetchContacts.pending, handlePending)
+      .addCase(fetchContacts.rejected, handleRejected),
 });
 
 // Експортуємо генератори екшенів та редюсер

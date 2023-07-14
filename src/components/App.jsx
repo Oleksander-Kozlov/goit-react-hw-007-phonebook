@@ -6,11 +6,11 @@
 import { ContactForm } from './ContactForm/ContactForm.jsx';
 import { Filter } from './Filter/Filter.jsx';
 import { ContactList } from './ContactList/ContactList.jsx';
-import { useSelector } from 'react-redux';
+
 
 export const App = () => {
-  const contacts = useSelector(state => state.contacts);
-  console.log('contactsAPP', contacts.length);
+  
+  
 
   
 

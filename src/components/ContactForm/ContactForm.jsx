@@ -14,7 +14,7 @@ const initialValues = { name: '', number: '' };
 
 export const ContactForm = () => {
   const dispatch = useDispatch();
-  const contacts = useSelector(state => state.contacts);
+  const contacts = useSelector(state => state.contacts.items);
 
   const handleSabmit = (values, { resetForm }) => {
     const haveNameInPhonebook = contacts.some(

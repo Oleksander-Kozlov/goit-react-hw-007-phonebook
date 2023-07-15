@@ -16,8 +16,11 @@ export const App = () => {
   }, [dispatch]);
 
   //нотифікашка на лоадінг
+  Loading.init({
+    svgColor: 'fuchsia',
+     });
   if (isLoading) {
-    Loading.hourglass('Wait...');
+    Loading.hourglass('');
   } else {
     Loading.remove();
   }
@@ -38,9 +41,12 @@ export const App = () => {
 
         {items[0] ? (
           <>
-            <h2>Contacts</h2>
-            <Filter />
-            <ContactList />
+            
+              <h2>Contacts</h2>
+              <Filter />
+
+              <ContactList />
+         
           </>
         ) : (
           <h3>Your phonebook is empty</h3>

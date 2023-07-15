@@ -2,7 +2,7 @@ import {
   createSlice,
   // nanoid
 } from '@reduxjs/toolkit';
-import { fetchContacts, removeContact } from './operation.js';
+import { fetchContacts, addContact, removeContact } from './operation.js';
 
 const InitialState = { items: [], isLoading: false, error: null };
 
@@ -26,7 +26,9 @@ const handleRemoveFulfilled = (state, action) => {
   state.items.splice(index, 1);
   state.isLoading = false;
 };
-
+const handleAddContactFulfilled = (state, action) => {
+  state.items.push(action.payload);
+};
 const contactsSlise = createSlice({
   name: 'contacts',
   initialState: InitialState,
@@ -69,40 +71,20 @@ const contactsSlise = createSlice({
   //       };
   //     },
   //   },
-  //   // deleteContact(state, action) {
-  //   // const index = state.items.findIndex(
-  //   //   contact => contact.id === action.payload
-  //   // );
-  //   // state.items.splice(index, 1);
-
-  //   // const removeContactById = (state, action) => {
-
-  //   // if (index !== -1) {
-  //   //   state.items.splice(index, 1);
-  //   // }
-  //   // };
-
-  //   // const withoutRemovedContact = state.items.filter(
-  //   //   contact => contact.id !== action.payload
-  //   // );
-  //   // console.log('state.items', state.items);
-  //   // localStorage.setItem(
-  //   //   'user-contact',
-  //   //   JSON.stringify(index)
-  //   // );
-  //   //   return state;
-  //   // },
-  // },
+  
   extraReducers: builder =>
     builder
       .addCase(fetchContacts.pending, handlePending)
       .addCase(fetchContacts.fulfilled, handleFulfilled)
       .addCase(fetchContacts.rejected, handleRejected)
+      .addCase(addContact.pending, handlePending)
+      .addCase(addContact.fulfilled, handleAddContactFulfilled)
+      .addCase(addContact.rejected, handleRejected)
       .addCase(removeContact.fulfilled, handleRemoveFulfilled)
       .addCase(removeContact.pending, handlePending)
       .addCase(removeContact.rejected, handleRejected),
 });
 
 // Експортуємо генератори екшенів та редюсер
-export const { addContact, deleteContact } = contactsSlise.actions;
+// export const { addContact, deleteContact } = contactsSlise.actions;
 export const contactsReducer = contactsSlise.reducer;

@@ -58,12 +58,13 @@ export const removeContact = createAsyncThunk(
   }
 );
 
-export const removeContact = createAsyncThunk(
+export const addContact = createAsyncThunk(
   'contacts/addContact',
-  async (id, { rejectWithValue }) => {
+  async (newContact, { rejectWithValue }) => {
     try {
-      const contact = await axios.delete(
-        `https://64abd7fe9edb4181202ea786.mockapi.io/phonenbook/v1/contacts/${id}`
+      const contact = await axios.post(
+        'https://64abd7fe9edb4181202ea786.mockapi.io/phonenbook/v1/contacts',
+        newContact
       );
       return contact.data;
     } catch (err) {

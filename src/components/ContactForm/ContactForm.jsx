@@ -8,7 +8,8 @@ import {
   Form,
 } from '../ContactForm/ContactForm.styled.js';
 import * as yup from 'yup';
-import { addContact } from 'redux/contactsSlise.js';
+// import { addContact } from 'redux/contactsSlise.js';
+import * as operation from 'redux/operation';
 
 const initialValues = { name: '', number: '' };
 
@@ -24,7 +25,12 @@ export const ContactForm = () => {
     if (haveNameInPhonebook) {
       return alert(`${values.name} is already in contacts`);
     }
-    dispatch(addContact(values.name, values.number));
+    dispatch(
+      operation.addContact({
+        name: values.name.trim(),
+        phone: values.number.trim(),
+      })
+    );
 
     resetForm();
   };

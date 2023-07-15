@@ -24,7 +24,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 // import axios from 'axios';
 
 
-axios.defaults.baseURL = 'https://62584f320c918296a49543e7.mockapi.io';
+
 
 export const fetchContacts = createAsyncThunk(
   'contacts/fetchContacts',
@@ -34,6 +34,38 @@ export const fetchContacts = createAsyncThunk(
         'https://64abd7fe9edb4181202ea786.mockapi.io/phonenbook/v1/contacts'
       );
       return contacts.data;
+    } catch (err) {
+      // Use `err.response.data` as `action.payload` for a `rejected` action,
+      // by explicitly returning it using the `rejectWithValue()` utility
+      return rejectWithValue(err);
+    }
+  }
+);
+
+export const removeContact = createAsyncThunk(
+  'contacts/removeContact',
+  async (id, { rejectWithValue }) => {
+    try {
+      const contact = await axios.delete(
+        `https://64abd7fe9edb4181202ea786.mockapi.io/phonenbook/v1/contacts/${id}`
+      );
+      return contact.data;
+    } catch (err) {
+      // Use `err.response.data` as `action.payload` for a `rejected` action,
+      // by explicitly returning it using the `rejectWithValue()` utility
+      return rejectWithValue(err);
+    }
+  }
+);
+
+export const removeContact = createAsyncThunk(
+  'contacts/addContact',
+  async (id, { rejectWithValue }) => {
+    try {
+      const contact = await axios.delete(
+        `https://64abd7fe9edb4181202ea786.mockapi.io/phonenbook/v1/contacts/${id}`
+      );
+      return contact.data;
     } catch (err) {
       // Use `err.response.data` as `action.payload` for a `rejected` action,
       // by explicitly returning it using the `rejectWithValue()` utility

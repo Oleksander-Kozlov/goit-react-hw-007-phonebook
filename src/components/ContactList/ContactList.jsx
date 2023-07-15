@@ -2,7 +2,7 @@ import { List } from '../ContactList/ContactList.styled.js';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { ButtonDelete, CotactItem } from './Contact.styled.js';
-import { deleteContact } from 'redux/contactsSlise.js';
+// import { deleteContact } from 'redux/contactsSlise.js';
 import * as operation from 'redux/operation';
 import { getContacts } from 'redux/selectors.js';
 
@@ -43,15 +43,20 @@ const getVisibleContacts = (contacts, filters) => {
   useEffect(() => {
     // localStorage.setItem('user-contact', JSON.stringify(contacts));
     dispatch(operation.fetchContacts());
+    
   }, [dispatch]);
-  useEffect(() => {
-    // localStorage.setItem('user-contact', JSON.stringify(contacts));
-    dispatch(operation.fetchContacts());
-  }, [dispatch]);
+  // useEffect(() => {
+  //   // localStorage.setItem('user-contact', JSON.stringify(contacts));
+  //   dispatch(operation.fetchContacts());
+  // }, [dispatch]);
 
-  //  const handleDelete = (id)=> {dispatch(deleteContact(id))};
+ 
+  // const handleDelete = id => {
+  //   dispatch(deleteContact(id));
+  // };
   const handleDelete = id => {
-    dispatch(deleteContact(id));
+    dispatch(operation.removeContact(id));
+    
   };
   return (
     <List>

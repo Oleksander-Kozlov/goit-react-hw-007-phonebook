@@ -1,18 +1,26 @@
-// import { nanoid } from 'nanoid';
-// import { useSelector } from 'react-redux';
-// import React, { useEffect } from 'react';
-
-// import { useState } from 'react';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import * as operation from 'redux/operation';
+import { getContacts } from 'redux/selectors.js';
+import { Loading } from 'notiflix';
 import { ContactForm } from './ContactForm/ContactForm.jsx';
 import { Filter } from './Filter/Filter.jsx';
 import { ContactList } from './ContactList/ContactList.jsx';
 
-
 export const App = () => {
-  
-  
+  const { items, isLoading, error } = useSelector(getContacts);
+  //переніс сюди діспатч виклик контактів, бо не рендерилась із-за умови items.length(39 рядок)
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(operation.fetchContacts());
+  }, [dispatch]);
 
-  
+  //нотифікашка на лоадінг
+  if (isLoading) {
+    Loading.hourglass('Wait...');
+  } else {
+    Loading.remove();
+  }
 
   return (
     <div
@@ -27,10 +35,18 @@ export const App = () => {
       <div>
         <h1>Phonebook</h1>
         <ContactForm />
-        <h2>Contacts</h2>
-        <Filter />
-        <ContactList />
+
+        {items[0] ? (
+          <>
+            <h2>Contacts</h2>
+            <Filter />
+            <ContactList />
+          </>
+        ) : (
+          <h3>Your phonebook is empty</h3>
+        )}
       </div>
+      {error && <h3>{error}</h3>}
     </div>
   );
 };

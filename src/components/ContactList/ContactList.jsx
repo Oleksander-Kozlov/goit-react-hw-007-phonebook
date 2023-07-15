@@ -1,73 +1,51 @@
-import { List } from '../ContactList/ContactList.styled.js';
+//redux
 import { useDispatch, useSelector } from 'react-redux';
-import { useEffect } from 'react';
-import { ButtonDelete, CotactItem } from './Contact.styled.js';
-// import { deleteContact } from 'redux/contactsSlise.js';
 import * as operation from 'redux/operation';
 import { getContacts } from 'redux/selectors.js';
+//styled
+import {
+  List,
+  ButtonDelete,
+  CotactItem,
+} from '../ContactList/ContactList.styled.js';
 
-// import { deleteContact } from 'redux/actions.js';
-// import PropTypes from 'prop-types';
-// import { useSelector } from 'react-redux/es/hooks/useSelector.js';
-// const BASEContact = [{ id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
-//     { id: 'id-2', name: 'Hermione Kline', number: '443-89-12' },
-//     { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
-//     { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },]
 export const ContactList = () => {
-  const filters = useSelector(state => state.filters) || '';
-  const contacts = useSelector(state => state.contacts.items);
-  const { items, isLoading, error } = useSelector(getContacts);
+  //значення стору редакс
+  const filters = useSelector(state => state.filters) || '';  
+  const { items } = useSelector(getContacts);
+  //диспечер)
   const dispatch = useDispatch();
-  // localStorage.setItem('user-contact', JSON.stringify(contacts));
-  console.log('contacts', contacts);
-  console.log('filters', filters);
-  console.log('items', items);
+//функція фільтрації контактів
 const getVisibleContacts = (contacts, filters) => {
   switch (filters) {
     case filters:
       return contacts.filter(contact =>
         contact.name.toLowerCase().includes(filters)
       );
-
     default:
       return contacts;
   }
-};
-  // const contactss = JSON.parse(localStorage.getItem('user-contact'))
-
-  // console.log('contacts', contacts);
-  const visibleFilter = getVisibleContacts(items, filters)
-    // items.filter(contact =>
-  //   contact.name.toLowerCase().includes(filters)
-  // );
-  useEffect(() => {
-    // localStorage.setItem('user-contact', JSON.stringify(contacts));
-    dispatch(operation.fetchContacts());
-    
-  }, [dispatch]);
-  // useEffect(() => {
-  //   // localStorage.setItem('user-contact', JSON.stringify(contacts));
-  //   dispatch(operation.fetchContacts());
-  // }, [dispatch]);
-
- 
-  // const handleDelete = id => {
-  //   dispatch(deleteContact(id));
-  // };
+  };
+  
+const visibleFilter = getVisibleContacts(items, filters)
+  
+//видалення контакту по айди
   const handleDelete = id => {
     dispatch(operation.removeContact(id));
     
   };
-  return (
-    <List>
-      {visibleFilter.map(contact => (
-        <CotactItem key={contact.id}>
-          {contact.name}: {contact.number}{' '}
-          <ButtonDelete onClick={() => handleDelete(contact.id)}>
-            Delete
-          </ButtonDelete>
-        </CotactItem>
-      ))}
-    </List>
-  );
+
+    return (
+      <List>
+        {visibleFilter.map(contact => (
+          <CotactItem key={contact.id}>
+            {contact.name}: {contact.number}{' '}
+            <ButtonDelete onClick={() => handleDelete(contact.id)}>
+              Delete
+            </ButtonDelete>
+          
+          </CotactItem>
+        ))}
+      </List>
+    );
 };

@@ -1,30 +1,37 @@
 import React from 'react';
+import { Notify } from 'notiflix';
 import { useDispatch, useSelector } from 'react-redux';
+import * as operation from 'redux/operation';
+//формік і валідація
 import { Formik, ErrorMessage } from 'formik';
+import * as yup from 'yup';
+//стилі
 import {
   Field,
   Label,
   ButtonAddContacts,
   Form,
 } from '../ContactForm/ContactForm.styled.js';
-import * as yup from 'yup';
-// import { addContact } from 'redux/contactsSlise.js';
-import * as operation from 'redux/operation';
-
+import { getContacts } from 'redux/selectors.js';
+//початкові значення форміка
 const initialValues = { name: '', number: '' };
 
 export const ContactForm = () => {
+  //виклик диспечера
   const dispatch = useDispatch();
-  const contacts = useSelector(state => state.contacts.items);
-
+  //отримання даних з редакс
+  const { items } = useSelector(getContacts);
+  //додавання контакту при сабміті
   const handleSabmit = (values, { resetForm }) => {
-    const haveNameInPhonebook = contacts.some(
+    //перевірка на дубляж
+    const haveNameInPhonebook = items.some(
       contact => contact.name.toLowerCase() === values.name.toLowerCase()
     );
-
+    //повідомлення користувача
     if (haveNameInPhonebook) {
-      return alert(`${values.name} is already in contacts`);
+      return Notify.failure(`${values.name} is already in contacts`);
     }
+    // виклик диспечера для відправки даних в редакс
     dispatch(
       operation.addContact({
         name: values.name.trim(),
@@ -34,7 +41,7 @@ export const ContactForm = () => {
 
     resetForm();
   };
-
+  //схема валідації
   const schema = yup.object().shape({
     name: yup.string().required().min(4),
     number: yup.number().required().min(4),
@@ -59,7 +66,3 @@ export const ContactForm = () => {
     </Formik>
   );
 };
-
-// ContactForm.propTypes = {
-//   children: PropTypes.node,
-// };

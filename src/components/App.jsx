@@ -7,7 +7,7 @@ import { ContactForm } from './ContactForm/ContactForm.jsx';
 import { Filter } from './Filter/Filter.jsx';
 import { ContactList } from './ContactList/ContactList.jsx';
 import{ Toaster } from 'react-hot-toast';
-
+import  { Radio } from 'react-loader-spinner';
 export const App = () => {
   const { items, isLoading, error } = useSelector(getContacts);
   //переніс сюди діспатч виклик контактів, бо не рендерилась із-за умови items.length(39 рядок)
@@ -20,6 +20,11 @@ export const App = () => {
   // Loading.init({
   //   svgColor: 'fuchsia',
   //    });
+//   if (isLoading) {
+//     return (
+      
+//     );
+// }
 //  else {
 //     toast.remove();;
 //   }
@@ -35,13 +40,23 @@ return (
       color: '#010101',
     }}
   >
-    
     {error ? (
       <h3>{error}</h3>
     ) : (
       <div>
         <h1>Phonebook</h1>
         <ContactForm />
+        {isLoading && !error && (
+          <Radio
+            visible={true}
+            height="280"
+            width="280"
+            ariaLabel="radio-loading"
+            wrapperStyle={{}}
+              wrapperClass="radio-wrapper"
+              
+          />
+        )}
         {items[0] ? (
           <>
             <h2>Contacts</h2>

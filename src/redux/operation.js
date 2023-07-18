@@ -1,5 +1,7 @@
 import axios from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import toast from 'react-hot-toast';
+// import toast from 'react-hot-toast';
 // import * as ContactAPI from './ContactAPI';
 // import {
 //   fetchContactsRequest,
@@ -22,8 +24,17 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 // };
 
 // import axios from 'axios';
-
-
+  const optToast = {
+    duration: 2000,
+    position: 'top-center',
+    // Styling
+    style: {
+      fontSize: "20px"
+    },
+    className: '',
+    // Custom Icon
+    icon: '❌'
+  }
 
 
 export const fetchContacts = createAsyncThunk(
@@ -33,22 +44,25 @@ export const fetchContacts = createAsyncThunk(
       const contacts = await axios.get(
         'https://64abd7fe9edb4181202ea786.mockapi.io/phonenbook/v1/contacts'
       );
+    
       return contacts.data;
     } catch (err) {
       // Use `err.response.data` as `action.payload` for a `rejected` action,
       // by explicitly returning it using the `rejectWithValue()` utility
-      return rejectWithValue(err);
+      return rejectWithValue(err.message);
     }
   }
+  
 );
 
 export const removeContact = createAsyncThunk(
   'contacts/removeContact',
-  async (id, { rejectWithValue }) => {
+  async ({id, name}, { rejectWithValue }) => {
     try {
       const contact = await axios.delete(
         `https://64abd7fe9edb4181202ea786.mockapi.io/phonenbook/v1/contacts/${id}`
       );
+      toast(`${name} has deleted`, optToast); 
       return contact.data;
     } catch (err) {
       // Use `err.response.data` as `action.payload` for a `rejected` action,
@@ -57,7 +71,7 @@ export const removeContact = createAsyncThunk(
     }
   }
 );
-
+  
 export const addContact = createAsyncThunk(
   'contacts/addContact',
   async (newContact, { rejectWithValue }) => {
@@ -66,6 +80,10 @@ export const addContact = createAsyncThunk(
         'https://64abd7fe9edb4181202ea786.mockapi.io/phonenbook/v1/contacts',
         newContact
       );
+            toast.success(`${newContact.name} add to phonebook`,{
+        duration: 2000,
+        position: 'top-center',
+      });
       return contact.data;
     } catch (err) {
       // Use `err.response.data` as `action.payload` for a `rejected` action,

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Notify } from 'notiflix';
+// import { Notify } from 'notiflix';
 import { useDispatch, useSelector } from 'react-redux';
 import * as operation from 'redux/operation';
 //формік і валідація
@@ -13,6 +13,7 @@ import {
   Form,
 } from '../ContactForm/ContactForm.styled.js';
 import { getContacts } from 'redux/selectors.js';
+import toast from 'react-hot-toast';
 //початкові значення форміка
 const initialValues = { name: '', number: '' };
 
@@ -28,8 +29,18 @@ export const ContactForm = () => {
       contact => contact.name.toLowerCase() === values.name.toLowerCase()
     );
     //повідомлення користувача
-    if (haveNameInPhonebook) {
-      return Notify.failure(`${values.name} is already in contacts`);
+      if (haveNameInPhonebook) {
+        return toast.error(`${values.name} is already in contacts`)(
+        
+          {    
+            duration: 1000,
+            position: 'top-center',
+          }
+        );
+      // Notify.failure(`${values.name} is already in contacts`);
+      
+      
+      
     }
     // виклик диспечера для відправки даних в редакс
     dispatch(
@@ -63,6 +74,7 @@ export const ContactForm = () => {
 
         <ButtonAddContacts type="submit">add contacts</ButtonAddContacts>
       </Form>
+      
     </Formik>
   );
 };

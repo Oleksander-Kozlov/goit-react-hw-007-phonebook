@@ -8,6 +8,7 @@ import {
   ButtonDelete,
   CotactItem,
 } from '../ContactList/ContactList.styled.js';
+// import toast from 'react-hot-toast';
 
 export const ContactList = () => {
   //значення стору редакс
@@ -28,10 +29,22 @@ const getVisibleContacts = (contacts, filters) => {
   };
   
 const visibleFilter = getVisibleContacts(items, filters)
-  
+  // const optToast = {
+  //   duration: 2000,
+  //   position: 'top-center',
+  //   // Styling
+  //   style: {
+  //     fontSize: "20px"
+  //   },
+  //   className: '',
+  //   // Custom Icon
+  //   icon: '❌'
+  // }
+     
 //видалення контакту по айди
-  const handleDelete = id => {
-    dispatch(operation.removeContact(id));
+  const handleDelete = (id, name) => {
+    dispatch(operation.removeContact({id, name}));
+        
     
   };
 
@@ -40,10 +53,9 @@ const visibleFilter = getVisibleContacts(items, filters)
         {visibleFilter.map(contact => (
           <CotactItem key={contact.id}>
             {contact.name}: {contact.number}{' '}
-            <ButtonDelete onClick={() => handleDelete(contact.id)}>
+            <ButtonDelete onClick={() => handleDelete(contact.id, contact.name)}>
               Delete
             </ButtonDelete>
-          
           </CotactItem>
         ))}
       </List>

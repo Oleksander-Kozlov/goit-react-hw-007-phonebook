@@ -2,7 +2,7 @@ import {
   createSlice,
   // nanoid
 } from '@reduxjs/toolkit';
-import { Notify } from 'notiflix';
+// import { Notify } from 'notiflix';
 import { fetchContacts, addContact, removeContact } from './operation.js';
 
 const InitialState = { items: [], isLoading: false, error: null };
@@ -26,12 +26,12 @@ const handleRemoveFulfilled = (state, action) => {
   const index = state.items.findIndex(contact => contact.id === action.payload.id);
   state.items.splice(index, 1);
   state.isLoading = false;
-  Notify.warning(`${action.payload.name.toUpperCase()} remove from phonebook`);
+  // Notify.warning(`${action.payload.name.toUpperCase()} remove from phonebook`);
 };
 const handleAddContactFulfilled = (state, action) => {
   state.items.push(action.payload);
   state.isLoading = false;
-  Notify.success(`${action.payload.name.toUpperCase()} add to phonebook`);
+  // Notify.success(`${action.payload.name.toUpperCase()} add to phonebook`);
 };
 const contactsSlise = createSlice({
   name: 'contacts',
